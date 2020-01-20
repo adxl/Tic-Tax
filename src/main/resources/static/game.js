@@ -28,19 +28,28 @@ function setPlaying(playing) {
     $("#exit").prop("disabled", !playing);
 
     if (playing) {
-        $("#play").hide();
-        $("#exit").show();
-        $("#board").show();
+        $("#play").hide()
+        $("#exit").show()
+        $("#board").show()
+        $("#name").hide()
+        $("#playerInfos").show()
+        console.log($("#name").val())
+        $("#playerInfos").html($("#name").val())
     } else {
-        $("#play").show();
-        $("#exit").hide();
-        $("#board").hide();
+        $("#play").show()
+        $("#exit").hide()
+        $("#board").hide()
+        $("#playerInfos").val("")
+        $("#playerInfos").hide()
+        $("#name").show()
+        $("#name").val("")
+
     }
 }
 
 function requestMove(spot) {
     stompClient.send('/app/play', {},JSON.stringify(
-        {"player":{"username":"john","mark":"X"},
+        {"player":{"username":$("#name").val(),"mark":"X"},
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
 }
 
@@ -77,5 +86,14 @@ function getSpotIndex(spot) {
 }
 
 $(function () {
-
+    $("form").on('submit', function (e) {
+        e.preventDefault();
+    });
+    $("#play").click(function () {
+        if($("#name").val())
+        startGame();
+    });
+    $("#exit").click(function () {
+        exitGame();
+    });
 });

@@ -18,10 +18,17 @@
 </head>
 <body>
 <h1>Tic-Tax</h1>
-<div id="playerInfos"></div>
+<div>
+    <p id="playerInfos"></p>
+</div>
 <div id="menu">
-    <input id="play" type="submit" value="Play" onclick="startGame()"></input>
-    <input id="exit" type="submit" value="Exit" onclick="exitGame()"></input>
+    <form>
+        <input id="name" type="text" required autocomplete="off" autofocus placeholder="Username">
+        <button id="play" type="submit">Play</button>
+    </form>
+    <form>
+        <button id="exit" type="submit">Exit</button>
+    </form>
 </div>
 <div id="board">
     <table>
