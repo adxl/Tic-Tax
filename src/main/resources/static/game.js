@@ -27,6 +27,8 @@ function accessLobby()
         $("#start").show()
         $("#play").hide()
         $("#name").hide()
+        $("#playerInfos").show()
+        $("#playerInfos").html("Hello, "+$("#name").val()+"!")
         stompClient.subscribe('/lobby/waiting', function (response) {
             if(JSON.parse(response.body))
             startGame();
@@ -46,6 +48,7 @@ function setWaiting()
     $("#lobbyMessage").text("Waiting for players...")
     $("#lobbyMessage").show()
     $("#start").hide()
+    $("#playerInfos").hide()
 }
 
 function setPlaying(playing) {
@@ -57,8 +60,6 @@ function setPlaying(playing) {
         $("#exit").show()
         $("#board").show()
         $("#name").hide()
-        $("#playerInfos").show()
-        $("#playerInfos").html($("#name").val())
         $("#start").hide()
         $("#lobbyMessage").hide()
     } else {
