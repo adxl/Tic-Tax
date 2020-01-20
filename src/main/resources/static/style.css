@@ -1,0 +1,26 @@
+body
+{
+	color:#343A40;
+}
+h1 {
+	text-align: center;
+}
+td {
+	width: 100px;
+	height: 100px;
+	text-align:center;
+	font-size:3rem;
+	font-family:sans;
+	font-weight:400;
+}
+table {
+	margin: 5px auto;
+}
+.vline {
+	border-left: 4px solid #343a40;
+	border-right: 4px solid #343a40;
+}
+.hline {
+	border-top: 4px solid #343a40;
+	border-bottom: 4px solid #343a40;
+}
