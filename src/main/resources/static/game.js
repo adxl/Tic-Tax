@@ -24,12 +24,13 @@ function accessLobby()
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Accessed the lobby: ' + frame);
+        $("#start").show()
+        $("#play").hide()
+        $("#name").hide()
         stompClient.subscribe('/lobby/waiting', function (response) {
-            console.log("lobby said")
-            console.log(JSON.parse(response.body))
-
-            if(response) startGame()
-            }
+            if(JSON.parse(response.body))
+            startGame();
+        }
         );
     });
 }
@@ -37,6 +38,14 @@ function accessLobby()
 function requestGame()
 {
     stompClient.send('/app/wait', {},$("#name").val());
+    setWaiting()
+}
+
+function setWaiting()
+{
+    $("#lobbyMessage").text("Waiting for players...")
+    $("#lobbyMessage").show()
+    $("#start").hide()
 }
 
 function setPlaying(playing) {
@@ -50,6 +59,8 @@ function setPlaying(playing) {
         $("#name").hide()
         $("#playerInfos").show()
         $("#playerInfos").html($("#name").val())
+        $("#start").hide()
+        $("#lobbyMessage").hide()
     } else {
         $("#play").show()
         $("#exit").hide()
@@ -107,6 +118,8 @@ function getSpotIndex(spot) {
     }
     return index;
 }
+
+
 
 $(function () {
     $("form").on('submit', function (e) {

@@ -12,16 +12,22 @@
             function () {
                 $("#board").hide();
                 $("#exit").hide();
+                $("#lobbyMessage").hide();
+                $("#start").hide();
             }
         );
     </script>
 </head>
 <body>
 <h1>Tic-Tax</h1>
-<input value="go" type="submit" onclick="requestGame()"
->
 <div>
     <p id="playerInfos"></p>
+</div>
+<div>
+    <h2 id="lobbyMessage"></h2>
+</div>
+<div>
+    <input id="start" type="submit" onclick="requestGame()" value="Start game">
 </div>
 <div id="menu">
     <form>
