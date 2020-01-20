@@ -6,15 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class GameController
 {
     List<Player> players=new ArrayList<>();
     String lastPlayer;
+    Lobby lobby=new Lobby();
 
     @MessageMapping("/play")
     @SendTo("/board/move")
@@ -40,8 +39,7 @@ public class GameController
                     HtmlUtils.htmlEscape(players.get(0).getMark()),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getJ()))));
-        }
-        else if (play.getPlayer().getUsername().equals(players.get(1).getUsername()) && !isLastPlayer(players.get(1)))
+        } else if (play.getPlayer().getUsername().equals(players.get(1).getUsername()) && !isLastPlayer(players.get(1)))
         {
             lastPlayer=players.get(1).getUsername();
             return new Move(HtmlUtils.htmlEscape(players.get(1).getUsername()),
@@ -51,6 +49,15 @@ public class GameController
         }
         System.out.println("Cant play!");
         return null;
+    }
+
+    @MessageMapping("/wait")
+    @SendTo("/lobby")
+    public boolean getLobby(Player p)
+    {
+        if (!lobby.isReady(p))
+            lobby.addPlayer(p);
+        return lobby.isFull() ? true : false;
     }
 
     private boolean isLastPlayer(Player player)

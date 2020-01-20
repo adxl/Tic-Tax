@@ -23,6 +23,11 @@ function exitGame() {
     console.log("Disconnected");
 }
 
+function requestGame()
+{
+        
+}
+
 function setPlaying(playing) {
     $("#play").prop("disabled", playing);
     $("#exit").prop("disabled", !playing);
