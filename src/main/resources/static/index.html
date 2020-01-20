@@ -7,25 +7,39 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/game.js"></script>
+    <script>
+        $(document).ready(
+            function () {
+                $("#board").hide();
+                $("#exit").hide();
+            }
+        );
+    </script>
 </head>
 <body>
 <h1>Tic-Tax</h1>
-<table>
-    <tr>
-        <td>X</td>
-        <td class="vline">O</td>
-        <td>X</td>
-    </tr>
-    <tr>
-        <td class="hline">O</td>
-        <td class="vline hline">X</td>
-        <td class="hline">X</td>
-    </tr>
-    <tr>
-        <td>O</td>
-        <td class="vline">X</td>
-        <td>O</td>
-    </tr>
-</table>
+<div id="menu">
+    <input id="play" type="submit" value="Play" onclick="startGame()"></input>
+    <input id="exit" type="submit" value="Exit" onclick="exitGame()"></input>
+</div>
+<div id="board">
+    <table>
+        <tr>
+            <td id="spot1" class="spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot2" class="vline spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot3" class="spot" onclick="getSpotIndex(this)"></td>
+        </tr>
+        <tr>
+            <td id="spot4" class="hline spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot5" class="vline hline spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot6" class="hline spot" onclick="getSpotIndex(this)"></td>
+        </tr>
+        <tr>
+            <td id="spot7" class="spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot8" class="vline spot" onclick="getSpotIndex(this)"></td>
+            <td id="spot9" class="spot" onclick="getSpotIndex(this)"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
