@@ -52,9 +52,10 @@ public class GameController
     }
 
     @MessageMapping("/wait")
-    @SendTo("/lobby")
-    public boolean getLobby(Player p)
+    @SendTo("/lobby/waiting")
+    public boolean getLobby(String p)
     {
+        System.out.println(p+" is waiting....");
         if (!lobby.isReady(p))
             lobby.addPlayer(p);
         return lobby.isFull() ? true : false;

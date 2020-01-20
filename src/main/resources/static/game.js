@@ -1,17 +1,12 @@
 var stompClient = null;
 
 function startGame() {
-    var socket = new SockJS('/tic-tax');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setPlaying(true)
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/board/move', function (play) {
-            draw(JSON.parse(play.body).play.player.username,
-                JSON.parse(play.body).play.player.mark,
-                JSON.parse(play.body).play.spot.i,
-                JSON.parse(play.body).play.spot.j)
-        });
+    setPlaying(true)
+    stompClient.subscribe('/board/move', function (play) {
+        draw(JSON.parse(play.body).play.player.username,
+            JSON.parse(play.body).play.player.mark,
+            JSON.parse(play.body).play.spot.i,
+            JSON.parse(play.body).play.spot.j)
     });
 }
 
@@ -23,9 +18,25 @@ function exitGame() {
     console.log("Disconnected");
 }
 
+function accessLobby()
+{
+    var socket = new SockJS('/tic-tax');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Accessed the lobby: ' + frame);
+        stompClient.subscribe('/lobby/waiting', function (response) {
+            console.log("lobby said")
+            console.log(JSON.parse(response.body))
+
+            if(response) startGame()
+            }
+        );
+    });
+}
+
 function requestGame()
 {
-        
+    stompClient.send('/app/wait', {},$("#name").val());
 }
 
 function setPlaying(playing) {
@@ -38,7 +49,6 @@ function setPlaying(playing) {
         $("#board").show()
         $("#name").hide()
         $("#playerInfos").show()
-        console.log($("#name").val())
         $("#playerInfos").html($("#name").val())
     } else {
         $("#play").show()
@@ -104,7 +114,7 @@ $(function () {
     });
     $("#play").click(function () {
         if($("#name").val())
-        startGame();
+       accessLobby();
     });
     $("#exit").click(function () {
         exitGame();

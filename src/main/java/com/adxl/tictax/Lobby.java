@@ -5,35 +5,30 @@ import java.util.List;
 
 public class Lobby
 {
-    private List<Player> players;
+    private List<String> playersNames;
 
     public Lobby()
     {
-        this.players=new ArrayList<>();
+        this.playersNames=new ArrayList<>();
     }
 
-    public List<Player> getPlayers()
+    public List<String> getPlayersNames()
     {
-        return players;
+        return playersNames;
     }
 
-    public void setPlayers(List<Player> players)
+    public void addPlayer(String player)
     {
-        this.players=players;
+        playersNames.add(player);
     }
 
-    public void addPlayer(Player player)
+    public boolean isReady(String player)
     {
-        players.add(player);
-    }
-
-    public boolean isReady(Player player)
-    {
-        return players.contains(player) ? true : false;
+        return playersNames.contains(player) ? true : false;
     }
 
     public boolean isFull()
     {
-        return players.size()==2 ? true : false;
+        return playersNames.size()==2 ? true : false;
     }
 }
