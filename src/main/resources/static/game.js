@@ -49,7 +49,7 @@ function setPlaying(playing) {
 
 function requestMove(spot) {
     stompClient.send('/app/play', {},JSON.stringify(
-        {"player":{"username":$("#name").val(),"mark":"X"},
+        {"player":{"username":$("#name").val(),"mark":"#"},
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
 }
 
