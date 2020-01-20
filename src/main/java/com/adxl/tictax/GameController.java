@@ -13,7 +13,6 @@ public class GameController
     @SendTo("/board/move")
     public Move getMove(Play play)
     {
-        System.out.println(play);
         return new Move(HtmlUtils.htmlEscape(play.getPlayer().getUsername()),
                 HtmlUtils.htmlEscape(play.getPlayer().getMark()),
                 Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),

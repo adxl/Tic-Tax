@@ -46,8 +46,13 @@ function requestMove(spot) {
 
 function draw(username,mark,i,j)
 {
-    console.log(i)
-    console.log(j)
+    var board=[
+        [1,2,3],
+        [4,5,6],
+        [7,8,9]
+    ]
+    var spot = "spot"+board[i][j]
+    $('#'+spot).html(mark)
 }
 
 function getSpotIndex(spot) {
