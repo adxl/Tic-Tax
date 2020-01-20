@@ -48,6 +48,14 @@ function setPlaying(playing) {
 }
 
 function requestMove(spot) {
+    var board=[
+        [1,2,3],
+        [4,5,6],
+        [7,8,9]
+    ]
+    var spotTd = "spot"+board[getSpotIndex(spot).i][getSpotIndex(spot).j]
+
+    if($('#'+spotTd).html()=="")
     stompClient.send('/app/play', {},JSON.stringify(
         {"player":{"username":$("#name").val(),"mark":"#"},
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
