@@ -14,6 +14,7 @@ import java.util.Map;
 public class GameController
 {
     List<Player> players=new ArrayList<>();
+    String lastPlayer;
 
     @MessageMapping("/play")
     @SendTo("/board/move")
@@ -31,18 +32,29 @@ public class GameController
         }
         //System.out.println(players.size());
         //System.out.println(play);
-        
-        if (play.getPlayer().getUsername().equals(players.get(0).getUsername()))
+
+        if (play.getPlayer().getUsername().equals(players.get(0).getUsername()) && !isLastPlayer(players.get(0)))
+        {
+            lastPlayer=players.get(0).getUsername();
             return new Move(HtmlUtils.htmlEscape(players.get(0).getUsername()),
                     HtmlUtils.htmlEscape(players.get(0).getMark()),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getJ()))));
-        else if (play.getPlayer().getUsername().equals(players.get(1).getUsername()))
+        }
+        else if (play.getPlayer().getUsername().equals(players.get(1).getUsername()) && !isLastPlayer(players.get(1)))
+        {
+            lastPlayer=players.get(1).getUsername();
             return new Move(HtmlUtils.htmlEscape(players.get(1).getUsername()),
                     HtmlUtils.htmlEscape(players.get(1).getMark()),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getJ()))));
+        }
         return null;
+    }
+
+    private boolean isLastPlayer(Player player)
+    {
+        return player.getUsername().equals(lastPlayer) ? true : false;
     }
 
 }
