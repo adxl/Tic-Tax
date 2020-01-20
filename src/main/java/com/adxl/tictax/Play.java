@@ -20,4 +20,13 @@ public class Play
     {
         return spot;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Play{"+
+                "player="+player+
+                ", spot="+spot+
+                '}';
+    }
 }

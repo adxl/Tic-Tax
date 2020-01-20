@@ -30,4 +30,13 @@ public class Spot
     {
         this.j=j;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Spot{"+
+                "i="+i+
+                ", j="+j+
+                '}';
+    }
 }
