@@ -39,7 +39,7 @@ function accessLobby()
 
 function requestGame()
 {
-    stompClient.send('/app/wait', {},$("#name").val());
+    stompClient.send('/app/wait', {},JSON.stringify({"username":$("#name").val(),"mark":"#"}));
     setWaiting()
 }
 
@@ -105,7 +105,6 @@ function getSpotIndex(spot) {
         "i":"",
         "j":""
     };
-    console.log(id)
     switch (id) {
         case '1': index.i=0;index.j=0; break;
         case '2': index.i=0;index.j=1; break;

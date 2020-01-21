@@ -5,13 +5,12 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class GameController
 {
-    List<Player> players=new ArrayList<>();
+    List<Player> players;
     String lastPlayer;
     Lobby lobby=new Lobby();
 
@@ -19,19 +18,6 @@ public class GameController
     @SendTo("/board/move")
     public Move getMove(Play play)
     {
-        //System.out.println(players.size());
-        if (players.isEmpty())
-        {
-            players.add(play.getPlayer());
-            players.get(0).setMark("O");
-        } else if (players.size()==1 && !players.get(0).getUsername().equals(play.getPlayer().getUsername()))
-        {
-            players.add(play.getPlayer());
-            players.get(1).setMark("X");
-        }
-        //System.out.println(players.size());
-        //System.out.println(play);
-
         if (play.getPlayer().getUsername().equals(players.get(0).getUsername()) && !isLastPlayer(players.get(0)))
         {
             lastPlayer=players.get(0).getUsername();
@@ -53,12 +39,24 @@ public class GameController
 
     @MessageMapping("/wait")
     @SendTo("/lobby/waiting")
-    public boolean getLobby(String p)
+    public boolean getLobby(Player p)
     {
-        System.out.println(p+" is waiting....");
-        if (!lobby.isReady(p))
+        System.out.println(p.getUsername()+" is waiting....");
+        if(lobby.getPlayers().isEmpty())
+        {
+            p.setMark("O");
             lobby.addPlayer(p);
-        return lobby.isFull() ? true : false;
+            return false;
+        }else if(lobby.getPlayers().size()==1)
+        {
+            p.setMark("X");
+            lobby.addPlayer(p);
+            players=lobby.getPlayers();
+            System.out.println(players.get(0).getUsername()+" VS "+players.get(1).getUsername());
+            return true;
+        }
+        //return lobby.isFull() ? true : false;
+        return false;
     }
 
     private boolean isLastPlayer(Player player)
