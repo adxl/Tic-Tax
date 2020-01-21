@@ -133,7 +133,11 @@ function draw(username,mark,i,j,names) {
             )
             $("#turn").text("It's your turn!")
         }
-    }else
+    }else if(checkWinner()==-1)
+    {
+        $("#turn").text("IT'S A TIE!")
+    }
+    else
         $("#turn").text(username.toUpperCase()+" WON THE GAME!")
 }
 
@@ -172,9 +176,22 @@ function checkWinner() {
         //console.log("diagonal /")
         return true;
     }
+
+    if(isTie()) return -1;
+
     return false;
 }
-
+function isTie()
+{
+    var result=true
+    $('#board').find('td.spot').each(function(i, td) {
+        if ($(td).html() == '') {
+            console.log("ALL")
+            result= false;
+        }
+    });
+    return result
+}
 function equalsThree(a, b, c) {
     if (a != "" && b != "" && c != "")
         return (a == b && b == c)
