@@ -6,6 +6,7 @@ import java.util.List;
 public class Lobby
 {
     private List<Player> players;
+    private boolean isFull;
 
     public Lobby()
     {
@@ -29,6 +30,16 @@ public class Lobby
 
     public boolean isFull()
     {
-        return players.size()==2 ? true : false;
+        return isFull;
     }
+
+    public void setFull(boolean full)
+    {
+        isFull=full;
+    }
+
+    /*public boolean isFull()
+    {
+        return players.size()==2 ? true : false;
+    }*/
 }

@@ -1,12 +1,19 @@
 var stompClient = null;
 
-function startGame() {
+function startGame(names) {
     setPlaying(true)
+    if ($("#name").val() == names.p1)
+        $("#turn").text($("#name").val()+", You play first!")
+    else
+        $("#turn").text(names.p1+" plays first")
+
+
     stompClient.subscribe('/board/move', function (play) {
         draw(JSON.parse(play.body).play.player.username,
             JSON.parse(play.body).play.player.mark,
             JSON.parse(play.body).play.spot.i,
-            JSON.parse(play.body).play.spot.j)
+            JSON.parse(play.body).play.spot.j,
+            names)
     });
 }
 
@@ -30,8 +37,15 @@ function accessLobby()
         $("#playerInfos").show()
         $("#playerInfos").html("Hello, "+$("#name").val()+"!")
         stompClient.subscribe('/lobby/waiting', function (response) {
-            if(JSON.parse(response.body))
-            startGame();
+            if(JSON.parse(response.body).full)
+            {
+                var playersNames = {
+                    p1 : JSON.parse(response.body).players[0].username,
+                    p2 : JSON.parse(response.body).players[1].username
+                }
+                //console.log(playersNames.p1+"----"+playersNames.p2)
+                startGame(playersNames);
+            }
         }
         );
     });
@@ -88,7 +102,7 @@ function requestMove(spot) {
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
 }
 
-function draw(username,mark,i,j) {
+function draw(username,mark,i,j,names) {
     var board = [
         [1, 2, 3],
         [4, 5, 6],
@@ -97,14 +111,24 @@ function draw(username,mark,i,j) {
     var spot = "spot" + board[i][j]
     $('#' + spot).html(mark)
 
-    if(username==$("#name").val())
+    if (username == $("#name").val() && username == names.p1) {
         $("#movesLog").append(
-            "<tr><td>\>You played on ("+i+","+j+")</td></tr>"
+            "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
         )
-    else
+        $("#turn").text(names.p2 + " is thinking..")
+    } else if (username == $("#name").val() && username == names.p2) {
         $("#movesLog").append(
-            "<tr><td>\>"+username+" played on ("+i+","+j+")</td></tr>"
+            "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
         )
+        $("#turn").text(names.p1 + " is thinking..")
+    } else {
+        $("#movesLog").append(
+            "<tr><td>\>" + username + " played on (" + i + "," + j + ")</td></tr>"
+        )
+        $("#turn").text("It's your turn!")
+    }
+
+
 }
 
 function getSpotIndex(spot) {

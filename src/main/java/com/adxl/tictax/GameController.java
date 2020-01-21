@@ -39,24 +39,27 @@ public class GameController
 
     @MessageMapping("/wait")
     @SendTo("/lobby/waiting")
-    public boolean getLobby(Player p)
+    public Lobby getLobby(Player p)
     {
         System.out.println(p.getUsername()+" is waiting....");
         if(lobby.getPlayers().isEmpty())
         {
             p.setMark("O");
             lobby.addPlayer(p);
-            return false;
+            lobby.setFull(false);
+            return lobby;
         }else if(lobby.getPlayers().size()==1)
         {
             p.setMark("X");
             lobby.addPlayer(p);
             players=lobby.getPlayers();
+            lastPlayer=players.get(1).getUsername();
+            lobby.setFull(true);
             System.out.println(players.get(0).getUsername()+" VS "+players.get(1).getUsername());
-            return true;
+            return lobby;
         }
         //return lobby.isFull() ? true : false;
-        return false;
+        return null;
     }
 
     private boolean isLastPlayer(Player player)
