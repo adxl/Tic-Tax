@@ -38,6 +38,15 @@ public class Lobby
         isFull=full;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Lobby{"+
+                "players="+players+
+                ", isFull="+isFull+
+                '}';
+    }
+
     /*public boolean isFull()
     {
         return players.size()==2 ? true : false;

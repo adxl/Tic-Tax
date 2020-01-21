@@ -36,4 +36,10 @@ public class Player
     {
         this.mark=mark;
     }
+
+    @Override
+    public String toString()
+    {
+        return username;
+    }
 }

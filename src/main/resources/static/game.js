@@ -3,11 +3,16 @@ var stompClient = null;
 function startGame(names) {
     setPlaying(true)
     if ($("#name").val() == names.p1)
-        $("#turn").text($("#name").val()+", You play first!")
+        $("#turn").text($("#name").val() + ", You play first!")
     else
-        $("#turn").text(names.p1+" plays first")
+        $("#turn").text(names.p1 + " plays first")
 
-
+    stompClient.subscribe('/game/abort', function (res) {
+        console.log("passed")
+        console.log(JSON.parse(res.body))
+        exitGame();
+        window.location.reload(true)
+    });
     stompClient.subscribe('/board/move', function (play) {
         draw(JSON.parse(play.body).play.player.username,
             JSON.parse(play.body).play.player.mark,
@@ -132,12 +137,11 @@ function draw(username,mark,i,j,names) {
         $("#turn").text(username.toUpperCase()+" WON THE GAME!")
 }
 
-function checkWinner()
-{
-    var board=[
-        [1,2,3],
-        [4,5,6],
-        [7,8,9]
+function checkWinner() {
+    var board = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
     ]
 
     for (i = 0; i < 3; i++) {
@@ -171,9 +175,9 @@ function checkWinner()
     return false;
 }
 
-function equalsThree(a,b,c)
-{   if(a!="" && b!="" && c!="")
-    return (a==b && b==c)
+function equalsThree(a, b, c) {
+    if (a != "" && b != "" && c != "")
+        return (a == b && b == c)
 }
 
 function getSpotIndex(spot) {
@@ -196,7 +200,10 @@ function getSpotIndex(spot) {
     return index;
 }
 
-
+function requestLeave()
+{
+    stompClient.send('/app/leave',{},JSON.stringify({"username":$("#name").val(),"mark":"#"}))
+}
 
 
 $(function () {
@@ -208,6 +215,7 @@ $(function () {
        accessLobby();
     });
     $("#exit").click(function () {
-        exitGame();
+        //exitGame();
+        requestLeave();
     });
 });
