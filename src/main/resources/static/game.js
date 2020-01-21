@@ -145,7 +145,7 @@ function checkWinner()
             $('#spot' + board[i][1]).html(),
             $('#spot' + board[i][2]).html())) {
             //console.log("row found in " + i)
-            return winnerExists()
+            return true;
         }
     }
     for (j = 0; j < 3; j++) {
@@ -153,29 +153,22 @@ function checkWinner()
             $('#spot' + board[1][j]).html(),
             $('#spot' + board[2][j]).html())) {
             //console.log("column found in " + j)
-            return winnerExists()
+            return true;
         }
     }
     if (equalsThree($('#spot' + board[0][0]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][2]).html())) {
         //console.log("diagonal \\")
-        return winnerExists()
+        return true;
     }
     if (equalsThree($('#spot' + board[0][2]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][0]).html())) {
         //console.log("diagonal /")
-        return winnerExists()
+        return true;
     }
-
     return false;
-
-}
-
-function winnerExists()
-{
-    return true;
 }
 
 function equalsThree(a,b,c)
