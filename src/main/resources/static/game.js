@@ -96,7 +96,7 @@ function requestMove(spot) {
     ]
     var spotTd = "spot"+board[getSpotIndex(spot).i][getSpotIndex(spot).j]
 
-    if($('#'+spotTd).html()=="")
+    if($('#'+spotTd).html()=="" && !checkWinner())
     stompClient.send('/app/play', {},JSON.stringify(
         {"player":{"username":$("#name").val(),"mark":"#"},
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
@@ -111,27 +111,28 @@ function draw(username,mark,i,j,names) {
     var spot = "spot" + board[i][j]
     $('#' + spot).html(mark)
 
-    checkWinner(username)
-
-    if (username == $("#name").val() && username == names.p1) {
-        $("#movesLog").append(
-            "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
-        )
-        $("#turn").text(names.p2 + " is thinking..")
-    } else if (username == $("#name").val() && username == names.p2) {
-        $("#movesLog").append(
-            "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
-        )
-        $("#turn").text(names.p1 + " is thinking..")
-    } else {
-        $("#movesLog").append(
-            "<tr><td>\>" + username + " played on (" + i + "," + j + ")</td></tr>"
-        )
-        $("#turn").text("It's your turn!")
-    }
+    if (!checkWinner()) {
+        if (username == $("#name").val() && username == names.p1) {
+            $("#movesLog").append(
+                "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
+            )
+            $("#turn").text(names.p2 + " is thinking..")
+        } else if (username == $("#name").val() && username == names.p2) {
+            $("#movesLog").append(
+                "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
+            )
+            $("#turn").text(names.p1 + " is thinking..")
+        } else {
+            $("#movesLog").append(
+                "<tr><td>\>" + username + " played on (" + i + "," + j + ")</td></tr>"
+            )
+            $("#turn").text("It's your turn!")
+        }
+    }else
+        $("#turn").text(username.toUpperCase()+" WON THE GAME!")
 }
 
-function checkWinner(username)
+function checkWinner()
 {
     var board=[
         [1,2,3],
@@ -144,7 +145,7 @@ function checkWinner(username)
             $('#spot' + board[i][1]).html(),
             $('#spot' + board[i][2]).html())) {
             //console.log("row found in " + i)
-            showWinner(username)
+            return winnerExists()
         }
     }
     for (j = 0; j < 3; j++) {
@@ -152,27 +153,29 @@ function checkWinner(username)
             $('#spot' + board[1][j]).html(),
             $('#spot' + board[2][j]).html())) {
             //console.log("column found in " + j)
-            showWinner(username)
+            return winnerExists()
         }
     }
     if (equalsThree($('#spot' + board[0][0]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][2]).html())) {
         //console.log("diagonal \\")
-        showWinner(username)
+        return winnerExists()
     }
     if (equalsThree($('#spot' + board[0][2]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][0]).html())) {
         //console.log("diagonal /")
-        showWinner(username)
+        return winnerExists()
     }
+
+    return false;
 
 }
 
-function showWinner(username)
+function winnerExists()
 {
-    $("#turn").text(username+" WON THE GAME!")
+    return true;
 }
 
 function equalsThree(a,b,c)
