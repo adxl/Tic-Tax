@@ -33,7 +33,7 @@ public class GameController
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getJ()))));
         }
-        System.out.println("Cant play!");
+        System.out.println("Can't play!");
         return null;
     }
 

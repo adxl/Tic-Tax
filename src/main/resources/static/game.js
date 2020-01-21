@@ -111,6 +111,8 @@ function draw(username,mark,i,j,names) {
     var spot = "spot" + board[i][j]
     $('#' + spot).html(mark)
 
+    checkWinner(username)
+
     if (username == $("#name").val() && username == names.p1) {
         $("#movesLog").append(
             "<tr><td>\>You played on (" + i + "," + j + ")</td></tr>"
@@ -127,8 +129,55 @@ function draw(username,mark,i,j,names) {
         )
         $("#turn").text("It's your turn!")
     }
+}
 
+function checkWinner(username)
+{
+    var board=[
+        [1,2,3],
+        [4,5,6],
+        [7,8,9]
+    ]
 
+    for (i = 0; i < 3; i++) {
+        if (equalsThree($('#spot' + board[i][0]).html(),
+            $('#spot' + board[i][1]).html(),
+            $('#spot' + board[i][2]).html())) {
+            //console.log("row found in " + i)
+            showWinner(username)
+        }
+    }
+    for (j = 0; j < 3; j++) {
+        if (equalsThree($('#spot' + board[0][j]).html(),
+            $('#spot' + board[1][j]).html(),
+            $('#spot' + board[2][j]).html())) {
+            //console.log("column found in " + j)
+            showWinner(username)
+        }
+    }
+    if (equalsThree($('#spot' + board[0][0]).html(),
+        $('#spot' + board[1][1]).html(),
+        $('#spot' + board[2][2]).html())) {
+        //console.log("diagonal \\")
+        showWinner(username)
+    }
+    if (equalsThree($('#spot' + board[0][2]).html(),
+        $('#spot' + board[1][1]).html(),
+        $('#spot' + board[2][0]).html())) {
+        //console.log("diagonal /")
+        showWinner(username)
+    }
+
+}
+
+function showWinner(username)
+{
+    $("#turn").text(username+" WON THE GAME!")
+}
+
+function equalsThree(a,b,c)
+{   if(a!="" && b!="" && c!="")
+    return (a==b && b==c)
 }
 
 function getSpotIndex(spot) {
@@ -150,6 +199,7 @@ function getSpotIndex(spot) {
     }
     return index;
 }
+
 
 
 
