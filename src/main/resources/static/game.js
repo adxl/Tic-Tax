@@ -58,14 +58,14 @@ function setPlaying(playing) {
     if (playing) {
         $("#play").hide()
         $("#exit").show()
-        $("#board").show()
+        $("#boardDiv").show()
         $("#name").hide()
         $("#start").hide()
         $("#lobbyMessage").hide()
     } else {
         $("#play").show()
         $("#exit").hide()
-        $("#board").hide()
+        $("#boardDiv").hide()
         $("#playerInfos").val("")
         $("#playerInfos").hide()
         $("#name").show()
@@ -88,15 +88,23 @@ function requestMove(spot) {
             "spot":{"i":getSpotIndex(spot).i,"j":getSpotIndex(spot).j}}));
 }
 
-function draw(username,mark,i,j)
-{
-    var board=[
-        [1,2,3],
-        [4,5,6],
-        [7,8,9]
+function draw(username,mark,i,j) {
+    var board = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
     ]
-    var spot = "spot"+board[i][j]
-    $('#'+spot).html(mark)
+    var spot = "spot" + board[i][j]
+    $('#' + spot).html(mark)
+
+    if(username==$("#name").val())
+        $("#movesLog").append(
+            "<tr><td>\>You played on ("+i+","+j+")</td></tr>"
+        )
+    else
+        $("#movesLog").append(
+            "<tr><td>\>"+username+" played on ("+i+","+j+")</td></tr>"
+        )
 }
 
 function getSpotIndex(spot) {

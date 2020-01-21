@@ -37,7 +37,7 @@ h1
 	text-align:center;
 }
 
-td
+.spot
 {
 	width:      100px;
 	height:     100px;
@@ -47,9 +47,34 @@ td
 	font-weight:400;
 }
 
+#movesLog td
+{
+	font-size:small;
+	text-align:center;
+}
+
+#boardDiv div
+{
+	width:50%;
+	float:left;
+	text-align:center;
+}
+
+#board
+{
+	text-align:center;
+	display:inline;
+}
+
+#log
+{
+	text-align:center;
+	width:75%
+}
+
 table
 {
-	margin:5px auto;
+	/*margin:5px auto;*/
 }
 
 .vline
