@@ -46,7 +46,7 @@ public class GameController
             lobby.addPlayer(p);
             lobby.setFull(false);
             return lobby;
-        } else if (lobby.getPlayers().size()==1)
+        } else if (lobby.getPlayers().size()==1 && !p.getUsername().equals(lobby.getFirst()))
         {
             p.setMark("X");
             lobby.addPlayer(p);
@@ -55,7 +55,7 @@ public class GameController
             lobby.setFull(true);
             return lobby;
         }
-        return null;
+        return new Lobby(-1);
     }
 
     @MessageMapping("/leave")

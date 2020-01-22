@@ -9,7 +9,6 @@ function startGame(names) {
 
     stompClient.subscribe('/game/abort', function (res) {
         exitGame();
-        window.location.reload(true)
     });
     stompClient.subscribe('/board/move', function (play) {
         draw(JSON.parse(play.body).play.player.username,
@@ -25,6 +24,7 @@ function exitGame() {
         stompClient.disconnect();
     }
     setPlaying(false);
+    window.location.reload(true)
     console.log("Disconnected");
 }
 
@@ -40,6 +40,11 @@ function accessLobby()
         $("#playerInfos").show()
         $("#playerInfos").html("Hello, "+$("#name").val()+"!")
         stompClient.subscribe('/lobby/waiting', function (response) {
+            if(JSON.parse(response.body).access==-1)
+            {
+                requestLeave();
+                exitGame();
+            }
             if(JSON.parse(response.body).full)
             {
                 var playersNames = {
