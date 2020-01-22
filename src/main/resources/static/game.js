@@ -153,6 +153,15 @@ function checkWinner() {
             $('#spot' + board[i][1]).html(),
             $('#spot' + board[i][2]).html())) {
             //console.log("row found in " + i)
+
+            var spot1 = $('#spot' + board[i][0])
+            var spot2 = $('#spot' + board[i][1])
+            var spot3 = $('#spot' + board[i][2])
+
+            var spots = $()
+            spots = spots.add(spot1).add(spot2).add(spot3)
+            spots.css("color", "#dc3545")
+
             return true;
         }
     }
@@ -161,6 +170,15 @@ function checkWinner() {
             $('#spot' + board[1][j]).html(),
             $('#spot' + board[2][j]).html())) {
             //console.log("column found in " + j)
+
+            var spot1 = $('#spot' + board[0][j])
+            var spot2 = $('#spot' + board[1][j])
+            var spot3 = $('#spot' + board[2][j])
+
+            var spots = $()
+            spots = spots.add(spot1).add(spot2).add(spot3)
+            spots.css("color", "#dc3545")
+
             return true;
         }
     }
@@ -168,12 +186,30 @@ function checkWinner() {
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][2]).html())) {
         //console.log("diagonal \\")
+
+        var spot1 = $('#spot' + board[0][0])
+        var spot2 = $('#spot' + board[1][1])
+        var spot3 = $('#spot' + board[2][2])
+
+        var spots = $()
+        spots = spots.add(spot1).add(spot2).add(spot3)
+        spots.css("color", "#dc3545")
+
         return true;
     }
     if (equalsThree($('#spot' + board[0][2]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][0]).html())) {
         //console.log("diagonal /")
+
+        var spot1 = $('#spot' + board[0][2])
+        var spot2 = $('#spot' + board[1][1])
+        var spot3 = $('#spot' + board[2][0])
+
+        var spots = $()
+        spots = spots.add(spot1).add(spot2).add(spot3)
+        spots.css("color", "#dc3545")
+
         return true;
     }
 
@@ -236,3 +272,15 @@ $(function () {
         requestLeave();
     });
 });
+
+/*
+
+$('#box'+board[i][0],'#box'+board[i][1],'#box'+board[i][2]).
+
+
+var $box1=$("#box"+board[i][0])
+var $box2=$("#box"+board[i][1])
+var $box3=$("#box"+board[i][2])
+$($box1,$box2,$box3).css("color","red")
+
+*/
