@@ -3,13 +3,11 @@ var stompClient = null;
 function startGame(names) {
     setPlaying(true)
     if ($("#name").val() == names.p1)
-        $("#turn").text($("#name").val() + ", You play first!")
+        $("#turn").text($("#name").val() + ", you play first!")
     else
         $("#turn").text(names.p1 + " plays first")
 
     stompClient.subscribe('/game/abort', function (res) {
-        console.log("passed")
-        console.log(JSON.parse(res.body))
         exitGame();
         window.location.reload(true)
     });
@@ -48,7 +46,6 @@ function accessLobby()
                     p1 : JSON.parse(response.body).players[0].username,
                     p2 : JSON.parse(response.body).players[1].username
                 }
-                //console.log(playersNames.p1+"----"+playersNames.p2)
                 startGame(playersNames);
             }
         }
@@ -64,7 +61,7 @@ function requestGame()
 
 function setWaiting()
 {
-    $("#lobbyMessage").text("Waiting for players...")
+    $("#lobbyMessage").text("Waiting for a player to join...")
     $("#lobbyMessage").show()
     $("#start").hide()
     $("#playerInfos").hide()
@@ -152,7 +149,6 @@ function checkWinner() {
         if (equalsThree($('#spot' + board[i][0]).html(),
             $('#spot' + board[i][1]).html(),
             $('#spot' + board[i][2]).html())) {
-            //console.log("row found in " + i)
 
             var spot1 = $('#spot' + board[i][0])
             var spot2 = $('#spot' + board[i][1])
@@ -169,7 +165,6 @@ function checkWinner() {
         if (equalsThree($('#spot' + board[0][j]).html(),
             $('#spot' + board[1][j]).html(),
             $('#spot' + board[2][j]).html())) {
-            //console.log("column found in " + j)
 
             var spot1 = $('#spot' + board[0][j])
             var spot2 = $('#spot' + board[1][j])
@@ -185,7 +180,6 @@ function checkWinner() {
     if (equalsThree($('#spot' + board[0][0]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][2]).html())) {
-        //console.log("diagonal \\")
 
         var spot1 = $('#spot' + board[0][0])
         var spot2 = $('#spot' + board[1][1])
@@ -200,7 +194,6 @@ function checkWinner() {
     if (equalsThree($('#spot' + board[0][2]).html(),
         $('#spot' + board[1][1]).html(),
         $('#spot' + board[2][0]).html())) {
-        //console.log("diagonal /")
 
         var spot1 = $('#spot' + board[0][2])
         var spot2 = $('#spot' + board[1][1])
@@ -213,21 +206,20 @@ function checkWinner() {
         return true;
     }
 
-    if(isTie()) return -1;
+    if (isTie()) return -1;
 
     return false;
 }
-function isTie()
-{
-    var result=true
-    $('#board').find('td.spot').each(function(i, td) {
-        if ($(td).html() == '') {
-            console.log("ALL")
-            result= false;
-        }
+
+function isTie() {
+    var result = true
+    $('#board').find('td.spot').each(function (i, td) {
+        if ($(td).html() == '')
+            result = false;
     });
     return result
 }
+
 function equalsThree(a, b, c) {
     if (a != "" && b != "" && c != "")
         return (a == b && b == c)
@@ -255,7 +247,7 @@ function getSpotIndex(spot) {
 
 function requestLeave()
 {
-    stompClient.send('/app/leave',{},JSON.stringify({"username":$("#name").val(),"mark":"#"}))
+    stompClient.send('/app/leave',{},JSON.stringify({"username":$("#name").val()}))
 }
 
 
@@ -264,23 +256,10 @@ $(function () {
         e.preventDefault();
     });
     $("#play").click(function () {
-        if($("#name").val())
-       accessLobby();
+        if ($("#name").val())
+            accessLobby();
     });
     $("#exit").click(function () {
-        //exitGame();
         requestLeave();
     });
 });
-
-/*
-
-$('#box'+board[i][0],'#box'+board[i][1],'#box'+board[i][2]).
-
-
-var $box1=$("#box"+board[i][0])
-var $box2=$("#box"+board[i][1])
-var $box3=$("#box"+board[i][2])
-$($box1,$box2,$box3).css("color","red")
-
-*/
