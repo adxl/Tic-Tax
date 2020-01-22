@@ -1,12 +1,5 @@
 # Tic-Tax
-Tic-Tax is a simple multiplayer Tic-Tac-Toe game.
-
-## Made with:
-Spring-Boot
-
-## Written in:
--Java
--JavaScript
+Tic-Tax is a simple multiplayer Tic-Tac-Toe game made with Spring-boot and written in Java and JavaScript.
     
 ## Screenshots
 
@@ -27,3 +20,5 @@ git clone https://github.com/adxl/Tic-Tax.git
 ~~~
 3. Use [ngrok](https://ngrok.com/) to play online with a friend, or open http://localhost:8080 in two tabs/windows for a local match.
 
+## Contributing
+An idea? feel free to contribute by making a pull request.
