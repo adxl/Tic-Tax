@@ -1,6 +1,7 @@
 body
 {
-	color:#343A40;
+	background-color:#343A40;
+	color:           white;
 }
 
 form
@@ -10,7 +11,13 @@ form
 
 #exit
 {
-	text-align:left;
+	position:  absolute;
+	left:      10px;
+	top:       10px;
+	background:none;
+	color:     white;
+	border:    none;
+	cursor:    pointer;
 }
 
 h1, h4
@@ -49,27 +56,32 @@ h1, h4
 
 #movesLog td
 {
-	font-size:small;
+	font-size: small;
 	text-align:center;
 }
 
-#boardDiv div
+#boardDiv div div
 {
-	width:50%;
-	float:left;
+	width:     50%;
+	float:     left;
 	text-align:center;
+}
+
+#gameboard
+{
+	padding-top:30px;
 }
 
 #board
 {
 	text-align:center;
-	display:inline;
+	display:   inline;
 }
 
 #log
 {
 	text-align:center;
-	width:75%
+	width:     75%
 }
 
 table
@@ -79,12 +91,12 @@ table
 
 .vline
 {
-	border-left: 4px solid #343A40;
-	border-right:4px solid #343A40;
+	border-left: 4px solid white;
+	border-right:4px solid white;
 }
 
 .hline
 {
-	border-top:   4px solid #343A40;
-	border-bottom:4px solid #343A40;
+	border-top:   4px solid white;
+	border-bottom:4px solid white;
 }
