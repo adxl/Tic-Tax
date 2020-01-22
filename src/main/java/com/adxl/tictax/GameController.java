@@ -33,7 +33,6 @@ public class GameController
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getI()))),
                     Integer.valueOf(HtmlUtils.htmlEscape(String.valueOf(play.getSpot().getJ()))));
         }
-        System.out.println("Can't play!");
         return null;
     }
 
@@ -41,32 +40,21 @@ public class GameController
     @SendTo("/lobby/waiting")
     public Lobby getLobby(Player p)
     {
-        System.out.println("lobby>"+lobby);
-        System.out.println("players>>"+players);
-        System.out.println(p.getUsername()+" is waiting....");
-        if(lobby.getPlayers().isEmpty())
+        if (lobby.getPlayers().isEmpty())
         {
             p.setMark("O");
             lobby.addPlayer(p);
             lobby.setFull(false);
-            System.out.println("1lobby>"+lobby);
-            System.out.println("players>>"+players);
             return lobby;
-        }else if(lobby.getPlayers().size()==1)
+        } else if (lobby.getPlayers().size()==1)
         {
             p.setMark("X");
             lobby.addPlayer(p);
             players=lobby.getPlayers();
             lastPlayer=players.get(1).getUsername();
             lobby.setFull(true);
-            System.out.println(players.get(0).getUsername()+" VS "+players.get(1).getUsername());
-            System.out.println("2lobby>"+lobby);
-            System.out.println("players>>"+players);
             return lobby;
         }
-        //return lobby.isFull() ? true : false;
-        System.out.println("nlobby>"+lobby);
-        System.out.println("players>>"+players);
         return null;
     }
 
@@ -74,7 +62,6 @@ public class GameController
     @SendTo("/game/abort")
     public boolean leaveGame(Player player)
     {
-        System.out.println(player);
         lobby=new Lobby();
         players=null;
         return true;
